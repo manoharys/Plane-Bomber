@@ -10,7 +10,7 @@ keys = {
 player = {
     inplay: false,
     score: 0,
-    speed: 2
+    speed: 12
 }
 
 //keyBoard events
@@ -37,34 +37,37 @@ function pressOff(e) {
 
 //Function which starts the game
 function start() {
-    player.inplay = true;
-    player.plane = document.createElement('div');
-    player.plane.classList.add('plane');
-    gameArea.appendChild(player.plane);
-    window.requestAnimationFrame(playGame);
-    player.x = player.plane.offsetLeft;
-    console.log(player.x);
-    player.y = player.plane.offsetTop;
-    console.log(player.y);
+    if (!player.inplay) {
+        player.inplay = true;
+        player.plane = document.createElement('div');
+        player.plane.classList.add('plane');
+        gameArea.appendChild(player.plane);
+        window.requestAnimationFrame(playGame);
+        player.x = player.plane.offsetLeft;
+        console.log(player.x);
+        player.y = player.plane.offsetTop;
+        console.log(player.y);
+    }
 }
 
 //Function which loops continously to create animation while playing the player functionlities
 function playGame() {
     if (player.inplay) {
-        if (keys.ArrowUp) {
+        if (keys.ArrowUp && player.y>0) {
             player.y -= player.speed
         }
-        if(keys.ArrowDown){
+        if (keys.ArrowDown && player.y<300) {
             player.y += player.speed;
         }
-        if(keys.ArrowLeft){
+        if (keys.ArrowLeft && player.x > 0) {
             player.x -= player.speed;
         }
-        if(keys.ArrowRight){
+        if (keys.ArrowRight && player.x < (gameArea.offsetWidth - 100)) {
             player.x += player.speed;
         }
         player.plane.style.top = player.y + 'px';
         player.plane.style.left = player.x + 'px';
+        
         window.requestAnimationFrame(playGame);
 
     }
