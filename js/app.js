@@ -10,7 +10,7 @@ keys = {
 player = {
     inplay: false,
     score: 0,
-    speed: 12
+    speed: 2
 }
 
 //keyBoard events
@@ -19,17 +19,14 @@ document.addEventListener('keyup', pressOff);
 
 //click event to start the Game.
 document.addEventListener('click', start);
-setInterval(() =>{
-    banner()
-},1000);
-  
-function banner(){
-    setTimeout(() =>{
+
+function banner() {
+    setTimeout(() => {
         message.classList.add("bigger");
-    },1000);
-    message.classList.remove('bigger');
-    banner();
+    }, 500);
+    message.classList.remove('bigger')
 }
+banner();
 //function which gives the key pressed info
 function pressOn(e) {
     e.preventDefault();
@@ -49,6 +46,7 @@ function pressOff(e) {
 function start() {
     if (!player.inplay) {
         message.classList.add("hide");
+        player.score = 2000;
         player.inplay = true;
         player.plane = document.createElement('div');
         player.plane.classList.add('plane');
@@ -64,10 +62,10 @@ function start() {
 //Function which loops continously to create animation while playing the player functionlities
 function playGame() {
     if (player.inplay) {
-        if (keys.ArrowUp && player.y>0) {
+        if (keys.ArrowUp && player.y > 0) {
             player.y -= player.speed
         }
-        if (keys.ArrowDown && player.y<300) {
+        if (keys.ArrowDown && player.y < 300) {
             player.y += player.speed;
         }
         if (keys.ArrowLeft && player.x > 0) {
@@ -76,10 +74,21 @@ function playGame() {
         if (keys.ArrowRight && player.x < (gameArea.offsetWidth - 100)) {
             player.x += player.speed;
         }
+
+        player.x += (player.speed * 2);
+
+        if (player.x > (gameArea.offsetWidth - 20)) {
+            player.x = 0;
+            player.score -= 100;
+        }
+        player.scrore--;
+        if (player.score < 0) {
+            player.score = 0;
+        }
         player.plane.style.top = player.y + 'px';
         player.plane.style.left = player.x + 'px';
-        
+
         window.requestAnimationFrame(playGame);
-       
+
     }
 }
