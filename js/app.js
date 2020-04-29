@@ -4,40 +4,68 @@ const message = document.querySelector('.gameMessage');
 
 //Object which tracks down the keypress
 keys = {
-    space : false
+    space: false
 }
 //Object which tracks the player gameplay dynamically
 player = {
-    inplay : false, 
-    score : 0,
-    speed :2
+    inplay: false,
+    score: 0,
+    speed: 2
 }
 
 //keyBoard events
-document.addEventListener('keydown',pressOn);
-document.addEventListener('keyup',pressOff);
+document.addEventListener('keydown', pressOn);
+document.addEventListener('keyup', pressOff);
 
 //click event to start the Game.
-document.addEventListener('click',start);
+document.addEventListener('click', start);
 
 //function which gives the key pressed info
-function pressOn(e){
+function pressOn(e) {
     e.preventDefault();
-    let tempKeys = (e.key == " ")?"space":e.key;
+    let tempKeys = (e.key == " ") ? "space" : e.key;
     keys[tempKeys] = true;
     console.log(keys);
 }
-function pressOff(e){
+
+function pressOff(e) {
     e.preventDefault();
-    let tempKeys = (e.key == " ")?"space":e.key;
+    let tempKeys = (e.key == " ") ? "space" : e.key;
     keys[tempKeys] = false;
     console.log(keys)
 }
 
 //Function which starts the game
-function start(){
-   inplay = true;
-   player.plane = document.createElement('div');
-   player.plane.classList.add('plane');
-   gameArea.appendChild(player.plane);
+function start() {
+    player.inplay = true;
+    player.plane = document.createElement('div');
+    player.plane.classList.add('plane');
+    gameArea.appendChild(player.plane);
+    window.requestAnimationFrame(playGame);
+    player.x = player.plane.offsetLeft;
+    console.log(player.x);
+    player.y = player.plane.offsetTop;
+    console.log(player.y);
+}
+
+//Function which loops continously to create animation while playing the player functionlities
+function playGame() {
+    if (player.inplay) {
+        if (keys.ArrowUp) {
+            player.y -= player.speed
+        }
+        if(keys.ArrowDown){
+            player.y += player.speed;
+        }
+        if(keys.ArrowLeft){
+            player.x -= player.speed;
+        }
+        if(keys.ArrowRight){
+            player.x += player.speed;
+        }
+        player.plane.style.top = player.y + 'px';
+        player.plane.style.left = player.x + 'px';
+        window.requestAnimationFrame(playGame);
+
+    }
 }
