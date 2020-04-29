@@ -19,7 +19,17 @@ document.addEventListener('keyup', pressOff);
 
 //click event to start the Game.
 document.addEventListener('click', start);
-
+setInterval(() =>{
+    banner()
+},1000);
+  
+function banner(){
+    setTimeout(() =>{
+        message.classList.add("bigger");
+    },1000);
+    message.classList.remove('bigger');
+    banner();
+}
 //function which gives the key pressed info
 function pressOn(e) {
     e.preventDefault();
@@ -38,6 +48,7 @@ function pressOff(e) {
 //Function which starts the game
 function start() {
     if (!player.inplay) {
+        message.classList.add("hide");
         player.inplay = true;
         player.plane = document.createElement('div');
         player.plane.classList.add('plane');
@@ -69,6 +80,6 @@ function playGame() {
         player.plane.style.left = player.x + 'px';
         
         window.requestAnimationFrame(playGame);
-
+       
     }
 }
