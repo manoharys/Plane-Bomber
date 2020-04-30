@@ -8,7 +8,15 @@ body{
     height: 100vh;
 }
 
-
+.score{
+    width: 100%;
+    height: 50px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-family: monospace;
+    font-size: 2rem;
+}
 .plane{
     position: absolute;
     top:100px;
@@ -43,4 +51,16 @@ body{
 }
 .hide{
     display: none;
+}
+
+.base{
+    position: absolute;
+    bottom: 0;
+    left: 100px;
+    color: white;
+    background-color: black;
+    width:50px;
+    height: 100px;
+    background-image: url(/assets/img/buildings.jpg);
+    background-size: cover;
 }

@@ -46,6 +46,8 @@ function pressOff(e) {
 function start() {
     if (!player.inplay) {
         message.classList.add("hide");
+        //creating the enemy base
+         makeEnemy();
         player.score = 2000;
         player.inplay = true;
         player.plane = document.createElement('div');
@@ -81,14 +83,26 @@ function playGame() {
             player.x = 0;
             player.score -= 100;
         }
-        player.scrore--;
+        player.score = player.score - 1;
         if (player.score < 0) {
             player.score = 0;
         }
         player.plane.style.top = player.y + 'px';
         player.plane.style.left = player.x + 'px';
-
+        score.innerHTML = "score = " + player.score;
         window.requestAnimationFrame(playGame);
 
+
     }
+}
+
+//Functin which creats enemy divs
+function makeEnemy() {
+    player.base = document.createElement("div");
+    player.base.setAttribute("class", "base");
+    player.base.style.width = Math.floor(Math.random() * 200) + 10 + "px";
+    player.base.style.height = Math.floor(Math.random() * 100) + 100 + "px";
+    player.base.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 200)) + 100 + "px";
+  
+    gameArea.appendChild(player.base);
 }
