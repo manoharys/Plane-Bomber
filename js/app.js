@@ -44,10 +44,12 @@ function pressOff(e) {
 
 //Function which starts the game
 function start() {
+    message.classList.add("hide");
     if (!player.inplay) {
-        message.classList.add("hide");
+
         //creating the enemy base
-         makeEnemy();
+        makeEnemy();
+        player.ready = true
         player.score = 2000;
         player.inplay = true;
         player.plane = document.createElement('div');
@@ -55,15 +57,16 @@ function start() {
         gameArea.appendChild(player.plane);
         window.requestAnimationFrame(playGame);
         player.x = player.plane.offsetLeft;
-        console.log(player.x);
         player.y = player.plane.offsetTop;
-        console.log(player.y);
     }
 }
 
 //Function which loops continously to create animation while playing the player functionlities
 function playGame() {
     if (player.inplay) {
+        if (keys.space) {
+            makeBomb();
+        }
         if (keys.ArrowUp && player.y > 0) {
             player.y -= player.speed
         }
@@ -103,6 +106,27 @@ function makeEnemy() {
     player.base.style.width = Math.floor(Math.random() * 200) + 10 + "px";
     player.base.style.height = Math.floor(Math.random() * 100) + 100 + "px";
     player.base.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 200)) + 100 + "px";
-  
+
     gameArea.appendChild(player.base);
+}
+
+//Function which makes bombs
+function makeBomb() {
+    console.log("bomb👿👿👿👿👿");
+    if (player.ready) {
+        player.score -= 1000;
+        player.active++;
+        player.bomb = document.createElement('div');
+        player.bomb.classList.add('bomb');
+        player.bomb.x = player.x;
+        player.bomb.y = player.y;
+        player.bomb.style.top = player.bomb.y + "px";
+        player.bomb.style.left = player.bomb.x + "px";
+        player.bomb.innerHTML = "😈";
+        gameArea.appendChild(player.bomb);
+        player.ready = false;
+        setTimeout(() => {
+            player.ready = true;
+        }, 500);
+    }
 }
