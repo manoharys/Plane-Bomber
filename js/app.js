@@ -63,7 +63,9 @@ function start() {
 
 //Function which loops continously to create animation while playing the player functionlities
 function playGame() {
+
     if (player.inplay) {
+        moveBomb();
         if (keys.space) {
             makeBomb();
         }
@@ -112,21 +114,33 @@ function makeEnemy() {
 
 //Function which makes bombs
 function makeBomb() {
-    console.log("bomb👿👿👿👿👿");
+  
     if (player.ready) {
         player.score -= 1000;
         player.active++;
-        player.bomb = document.createElement('div');
-        player.bomb.classList.add('bomb');
-        player.bomb.x = player.x;
-        player.bomb.y = player.y;
-        player.bomb.style.top = player.bomb.y + "px";
-        player.bomb.style.left = player.bomb.x + "px";
-        player.bomb.innerHTML = "😈";
-        gameArea.appendChild(player.bomb);
+      let bomb = document.createElement('div');
+        bomb.classList.add('bomb');
+        bomb.x = player.x;
+        bomb.y = player.y;
+        bomb.style.top = bomb.y + "px";
+        bomb.style.left = bomb.x + "px";
+        bomb.innerHTML = "😈";
+        gameArea.appendChild(bomb);
         player.ready = false;
         setTimeout(() => {
             player.ready = true;
         }, 500);
     }
+}
+
+//Function which move bombs automitically
+function moveBomb() {
+    let bombs = document.querySelectorAll(".bomb");
+    bombs.forEach(function (item) {
+        item.y += 5;
+        item.style.top = item.y + "px";
+        if (item.y > 1000) {
+            item.parentElement.removeChild(item);
+        }
+    })
 }
