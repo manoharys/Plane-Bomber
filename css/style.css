@@ -6,7 +6,9 @@
 
 body {
     height: 100vh;
-    background-image: url(/img/cloud.png);
+    background: url(/cloud2.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 
 .score {
@@ -25,8 +27,9 @@ body {
     left: 200px;
     width: 150px;
     height: 100px;
-    background-image: url("/img/plane.png");
+    background-image: url("/plane.png");
     background-size: 100% 100%;
+    background-repeat: no-repeat;
 }
 
 .gameMessage {
@@ -37,7 +40,7 @@ body {
     position: absolute;
     width: 100%;
     height: 100vh;
-    background-image: url("/img/banner.jpg");
+    background-image: url("/banner.jpg");
     background-size: 100% 100%;
     color: rgb(255, 187, 0);
     font-size: 4rem;
