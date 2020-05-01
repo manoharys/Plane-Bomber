@@ -44,16 +44,20 @@ function pressOff(e) {
 
 //Function which starts the game
 function start() {
-    message.classList.add("hide");
+    message.classList.add('hide');
     if (!player.inplay) {
-
-        //creating the enemy base
+        gameArea.innerHTML = "";
+        player.level = 10;
+        //Enemy base
         makeEnemy();
-        player.ready = true
-        player.score = 2000;
         player.inplay = true;
-        player.plane = document.createElement('div');
-        player.plane.classList.add('plane');
+        player.score = 2000;
+        player.totalBombs = 6;
+        player.ready = true;
+        player.activeBomb = 0;
+        player.bombScore = 0;
+        player.plane = document.createElement("div");
+        player.plane.setAttribute("class", "plane");
         gameArea.appendChild(player.plane);
         window.requestAnimationFrame(playGame);
         player.x = player.plane.offsetLeft;
@@ -69,7 +73,7 @@ function playGame() {
         if (keys.space) {
             makeBomb();
         }
-        if (keys.ArrowUp && player.y > 0) {
+        if (keys.ArrowUp && player.y > 80) {
             player.y -= player.speed
         }
         if (keys.ArrowDown && player.y < 300) {
@@ -103,31 +107,39 @@ function playGame() {
 
 //Functin which creats enemy divs
 function makeEnemy() {
-    player.base = document.createElement("div");
-    player.base.setAttribute("class", "base");
-    player.base.style.width = Math.floor(Math.random() * 200) + 10 + "px";
-    player.base.style.height = Math.floor(Math.random() * 100) + 100 + "px";
-    player.base.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 200)) + 100 + "px";
+    player.level--;
+    if (player.level < 0) {
+        endGame();
+    } else {
+        player.base = document.createElement("div");
+        player.base.setAttribute("class", "base");
+        player.base.style.width = Math.floor(Math.random() * 200) + 10 + "px";
+        player.base.style.height = Math.floor(Math.random() * 100) + 100 + "px";
+        player.base.style.left = Math.floor(Math.random() * (gameArea.offsetWidth - 200)) + 100 + "px";
+        gameArea.appendChild(player.base);
+    }
 
-    gameArea.appendChild(player.base);
+
 }
 
 //Function which makes bombs
 function makeBomb() {
 
-    if (player.ready) {
-        player.score -= 1000;
-        player.active++;
-        let bomb = document.createElement('div');
-        bomb.classList.add('bomb');
-        bomb.x = player.x;
-        bomb.y = player.y;
-        bomb.style.top = bomb.y + "px";
-        bomb.style.left = bomb.x + "px";
+    if (player.ready && (player.activeBomb < player.totalBombs)) {
+        player.score -= 300;
+        player.bombScore++;
+        player.activeBomb++;
+        let bomb = document.createElement("div");
+        bomb.classList.add("bomb");
+        bomb.innerHTML = player.bombScore;
         bomb.innerHTML = "😈";
+        bomb.y = player.y;
+        bomb.x = player.x;
+        bomb.style.left = bomb.x + "px";
+        bomb.style.top = bomb.y + "px";
         gameArea.appendChild(bomb);
         player.ready = false;
-        setTimeout(() => {
+        setTimeout(function () {
             player.ready = true;
         }, 500);
     }
@@ -140,14 +152,23 @@ function moveBomb() {
         item.y += 5;
         item.style.top = item.y + "px";
         if (item.y > 1000) {
+            player.activeBomb--;
             item.parentElement.removeChild(item);
         }
         if (isCollide(item, player.base)) {
-            console.log("crash");
+            player.score += 2000;
+            player.activeBomb--;
+            player.base.parentElement.removeChild(player.base);
+            item.parentElement.removeChild(item);
+            makeEnemy();
         }
     })
 }
 
+function endGame() {
+    player.inplay = false;
+    gameMessage.classList.remove("hide");
+}
 
 //Checks coliistion......
 function isCollide(a, b) {
