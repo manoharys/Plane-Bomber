@@ -114,11 +114,11 @@ function makeEnemy() {
 
 //Function which makes bombs
 function makeBomb() {
-  
+
     if (player.ready) {
         player.score -= 1000;
         player.active++;
-      let bomb = document.createElement('div');
+        let bomb = document.createElement('div');
         bomb.classList.add('bomb');
         bomb.x = player.x;
         bomb.y = player.y;
@@ -142,5 +142,17 @@ function moveBomb() {
         if (item.y > 1000) {
             item.parentElement.removeChild(item);
         }
+        if (isCollide(item, player.base)) {
+            console.log("crash");
+        }
     })
+}
+
+
+//Checks coliistion......
+function isCollide(a, b) {
+    let aRect = a.getBoundingClientRect();
+    let bRect = b.getBoundingClientRect();
+    return !(
+        (aRect.bottom < bRect.top) || (aRect.top > bRect.bottom) || (aRect.right < bRect.left) || (aRect.left > bRect.right))
 }
