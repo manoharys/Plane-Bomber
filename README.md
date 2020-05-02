@@ -1,6 +1,6 @@
 # Plane-Bomber
 
-You need to destroy ground targets by dropping the balls.
+You need to destroy ground targets by dropping the bombs.
 
 # gamePlay
 <b> Use space key for droping a ball </b>
@@ -9,5 +9,4 @@ You need to destroy ground targets by dropping the balls.
 
 While progressing your score will increase/decrease. 
 
-<b> <a href= "https://manoharys.github.io/Plane-Bomber/"> Play here.....</a></b>
 
