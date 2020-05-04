@@ -13,4 +13,6 @@ While progressing your score will increase/decrease.
 
  <a href = "https://manoharys.github.io/Plane-Bomber/"> Click here</a>
  
- 
+# Preview
+
+ <img src = "https://github.com/manoharys/Plane-Bomber/blob/master/preview.gif">
