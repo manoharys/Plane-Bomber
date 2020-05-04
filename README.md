@@ -9,4 +9,8 @@ You need to destroy ground targets by dropping the bombs.
 
 While progressing your score will increase/decrease. 
 
+# play here
 
+ <a href = "https://manoharys.github.io/Plane-Bomber/"> Click here</a>
+ 
+ 
